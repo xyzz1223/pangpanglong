@@ -3,27 +3,70 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>打开微信业务页</title>
+  <title>成都打卡小程序入口</title>
+  <style>
+    body {
+      font-family: "Segoe UI", "PingFang SC", sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 30px;
+    }
+    button {
+      display: block;
+      width: 90%;
+      max-width: 400px;
+      margin: 10px auto;
+      padding: 14px 0;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      background-color: #1aad19;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #179e16;
+    }
+    p {
+      color: #666;
+      margin-top: 30px;
+    }
+  </style>
 </head>
 <body>
-  <h1>打开微信业务页</h1>
-  <p>点击下面按钮尝试打开微信业务页（移动端有效）：</p>
-  <button id="open">打开微信业务页</button>
+  <h1>胖胖龙打卡小程序入口</h1>
+
+  <button onclick="openWeixin('DWqI4sdsFWt')">夜游锦江</button>
+  <button onclick="openWeixin('zZUxVzK8yFf')">建设路</button>
+  <button onclick="openWeixin('cE8ZOd5125j')">东郊记忆</button>
+  <button onclick="openWeixin('S1usCOjHIGC')">文殊坊</button>
+  <button onclick="openWeixin('4FUYVJWrTof')">铁像寺</button>
+  <button onclick="openWeixin('iMOUlJxSURf')">IFS</button>
+  <button onclick="openWeixin('Mxbw2YSGcWI')">晶融汇</button>
+  <button onclick="openWeixin('dCTLVbncbpo')">大慈茶社</button>
+  <button onclick="openWeixin('BNxlK4oHg6i')">锦里</button>
+  <button onclick="openWeixin('O1jnBQQXZ8t')">宽窄巷子</button>
+
   <p id="status"></p>
 
   <script>
-    const uri = "weixin://dl/business/?t=DWqI4sdsFWt";
-    const intentUri = "intent://dl/business/?t=DWqI4sdsFWt#Intent;scheme=weixin;package=com.tencent.mm;S.browser_fallback_url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.tencent.mm;end";
-
-    document.getElementById('open').addEventListener('click', function(){
-      // 先尝试用 intent（Android Chrome 支持）
-      window.location = intentUri;
-      // 兼容浏览器可能阻止直接跳转的情况 —— 尝试再次设置 location 为 scheme（某些浏览器需要）
-      setTimeout(function(){
-        window.location = uri;
+    function openWeixin(code) {
+      const schemeUrl = `weixin://dl/business/?t=${code}`;
+      const intentUrl = `intent://dl/business/?t=${code}#Intent;scheme=weixin;package=com.tencent.mm;S.browser_fallback_url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.tencent.mm;end`;
+      // 尝试 Android intent（Chrome 支持）
+      window.location = intentUrl;
+      // 延迟回退到 scheme（兼容 Safari / 部分浏览器）
+      setTimeout(() => {
+        window.location = schemeUrl;
       }, 500);
-      document.getElementById('status').textContent = "已尝试启动微信，若无反应请确保设备安装了微信。";
-    });
+      document.getElementById('status').textContent = "已尝试打开微信，请确保手机已安装微信。";
+    }
   </script>
 </body>
 </html>
