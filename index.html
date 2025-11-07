@@ -3,74 +3,125 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>成都打卡小程序入口</title>
+  <title>胖胖龙打卡小程序入口</title>
   <style>
     body {
       font-family: "Segoe UI", "PingFang SC", sans-serif;
-      background: #f5f7fa;
+      background: #fdfaf5; /* 一个接近地图底色的背景色 */
       margin: 0;
-      padding: 40px 20px;
+      padding: 20px;
       text-align: center;
     }
-    h1 {
-      color: #333;
-      margin-bottom: 30px;
+    
+    /* * --- 新增样式 ---
+     * 这是您新标题图片的样式
+     */
+    .page-title {
+      max-width: 300px; /* 限制标题图片的最大宽度 */
+      width: 70%; /* 在手机上自动缩放 */
+      height: auto;
+      margin-bottom: 20px; /* 替代 h1 的 margin-bottom */
     }
-    button {
-      display: block;
-      width: 90%;
-      max-width: 400px;
-      margin: 10px auto;
-      padding: 14px 0;
-      font-size: 18px;
-      border: none;
-      border-radius: 8px;
-      background-color: #1aad19;
-      color: white;
+
+    .map-container {
+      position: relative;
+      max-width: 1000px;
+      margin: 20px auto;
+      border-radius: 20px;
+      overflow: hidden; /* 隐藏溢出的部分，保持圆角 */
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    .map-background {
+      width: 100%;
+      display: block; /* 消除图片底部的空白间隙 */
+    }
+    .map-button {
+      position: absolute; 
+      width: 14%; 
+      height: auto;
       cursor: pointer;
-      transition: background 0.3s;
+      transform: translate(-50%, -50%);
+      transition: transform 0.2s ease-in-out, filter 0.2s;
     }
-    button:hover {
-      background-color: #179e16;
+    .map-button:hover {
+      transform: translate(-50%, -50%) scale(1.05);
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
     }
-    p {
-      color: #666;
+    
+    /* --- 您最终调整好的坐标 --- */
+    #btn-jyq { top: 48.6%; left: 60.0%; width: 20%; } /* 夜游锦江 */
+    #btn-jsl { top: 28.0%; left: 61.6%; width: 12%; } /* 建设路 */
+    #btn-djjy { top: 35.4%; left: 77.5%; width: 14%; } /* 东郊记忆 */
+    #btn-wsy { top: 26.2%; left: 49.7%; width: 12%; } /* 文殊坊 */
+    #btn-txssj { top: 75.0%; left: 48.0%; width: 20%; } /* 铁像寺 */
+    #btn-ifs { top: 46.5%; left: 44.7%; width: 8%; } /* IFS */
+    #btn-jrh { top: 54.9%; left: 41.7%; width: 14%; } /* 晶融汇 */
+    #btn-dccs { top: 37.0%; left: 45.7%; width: 14%; } /* 大慈茶舍 */
+    #btn-kzxz { top: 36.3%; left: 28.1%; width: 15%; } /* 宽窄巷子 */
+    #btn-jl { top: 48.5%; left: 26.8%; width: 12.5%; } /* 锦里 */
+
+    .mini-map {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 25%;
+      max-width: 150px;
+      border-radius: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      border: 2px solid white;
+    }
+    .footer {
       margin-top: 30px;
+    }
+    .footer p {
+      color: #666;
+    }
+    .footer img {
+      width: 200px;
+      height: auto;
     }
   </style>
 </head>
 <body>
-  <h1>胖胖龙打卡小程序入口</h1>
+  <img src="pplui/根据字体生成字样-removebg-preview.png" class="page-title" alt="胖胖龙打卡小程序入口">
 
-  <button onclick="openWeixin('DWqI4sdsFWt')">夜游锦江</button>
-  <button onclick="openWeixin('zZUxVzK8yFf')">建设路</button>
-  <button onclick="openWeixin('cE8ZOd5125j')">东郊记忆</button>
-  <button onclick="openWeixin('S1usC0jHlGc')">文殊坊</button>
-  <button onclick="openWeixin('4FUYVJWrTof')">铁像寺</button>
-  <button onclick="openWeixin('iM0UlJxSURf')">IFS</button>
-  <button onclick="openWeixin('Mxbw2YSGCWl')">晶融汇</button>
-  <button onclick="openWeixin('dCTLV6ncbpo')">大慈茶社</button>
-  <button onclick="openWeixin('BNxlK4oHg6i')">锦里</button>
-  <button onclick="openWeixin('O1jnBQQXZ8t')">宽窄巷子</button>
+  <div class="map-container">
+    <img src="pplui/mapya.cc1bd50a.png" class="map-background" alt="背景地图">
+    <img src="pplui/mapSmall.png" class="mini-map" alt="小地图参考">
+
+    <img src="pplui/jyq.png" class="map-button" id="btn-jyq" alt="夜游锦江" onclick="openWeixin('DWqI4sdsFWt')">
+    <img src="pplui/jsl.png" class="map-button" id="btn-jsl" alt="建设路" onclick="openWeixin('zZUxVzK8yFf')">
+    <img src="pplui/djjy.png" class="map-button" id="btn-djjy" alt="东郊记忆" onclick="openWeixin('cE8ZOd5125j')">
+    <img src="pplui/wsy.png" class="map-button" id="btn-wsy" alt="文殊坊" onclick="openWeixin('S1usC0jHlGc')">
+    <img src="pplui/txssj.png" class="map-button" id="btn-txssj" alt="铁像寺" onclick="openWeixin('4FUYVJWrTof')">
+    <img src="pplui/ifs.png" class="map-button" id="btn-ifs" alt="IFS" onclick="openWeixin('iM0UlJxSURf')">
+    <img src="pplui/jrh.png" class="map-button" id="btn-jrh" alt="晶融汇" onclick="openWeixin('Mxbw2YSGCWl')">
+    <img src="pplui/dccs.png" class="map-button" id="btn-dccs" alt="大慈茶社" onclick="openWeixin('dCTLV6ncbpo')">
+    <img src="pplui/jl.png" class="map-button" id="btn-jl" alt="锦里" onclick="openWeixin('BNxlK4oHgi')">
+    <img src="pplui/kzxz.png" class="map-button" id="btn-kzxz" alt="宽窄巷子" onclick="openWeixin('O1jnBQQXZ8t')">
+  </div>
 
   <p id="status"></p>
 
   <div class="footer">
     <p>如果觉得有帮助，可以扫码赞赏支持一下 😊</p>
-    <img src="./image/zanshang.png" alt="赞赏码" />
+    <img src="image/zanshang.png" alt="赞赏码" />
   </div>
-
+  
   <script>
+    // JS 部分无需改动
     function openWeixin(code) {
       const schemeUrl = `weixin://dl/business/?t=${code}`;
-      const intentUrl = `intent://dl/business/?t=${code}#Intent;scheme=weixin;package=com.tencent.mm;S.browser_fallback_url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.tencent.mm;end`;
-      // 尝试 Android intent（Chrome 支持）
-      window.location = intentUrl;
-      // 延迟回退到 scheme（兼容 Safari / 部分浏览器）
+      const intentUrl = `intent://dl/business/?t=${code}#Intent;scheme=weixin;package=com.tencent.mm;S.browser_fallback_url=https...`;
+      try {
+        window.location.href = intentUrl;
+      } catch(e) {}
       setTimeout(() => {
-        window.location = schemeUrl;
-      }, 500);
-      document.getElementById('status').textContent = "已尝试打开微信，请确保手机已安装微信。";
+        if (!document.hidden) { 
+           window.location.href = schemeUrl;
+        }
+      }, 800); 
+      document.getElementById('status').textContent = "已尝试打开微信...（如无反应，请确保已安装微信或在手机浏览器中打开）";
     }
   </script>
 </body>
