@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>胖胖龙打卡小程序入口</title>
   <style>
+    /* --- 基础样式 --- */
     body {
       font-family: "Segoe UI", "PingFang SC", sans-serif;
       background: #fdfaf5; 
@@ -20,6 +21,7 @@
       margin-bottom: 10px; 
     }
 
+    /* --- 地图组件 --- */
     .map-container {
       position: relative;
       max-width: 1000px;
@@ -62,7 +64,7 @@
       filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
     }
     
-    /* 您的坐标 */
+    /* 地图按钮坐标 */
     #btn-jyq { top: 48.6%; left: 60.0%; width: 20%; } 
     #btn-jsl { top: 28.0%; left: 61.6%; width: 12%; } 
     #btn-djjy { top: 35.4%; left: 77.5%; width: 14%; } 
@@ -100,19 +102,8 @@
     #modal-trigger-btn:hover {
       transform: scale(1.1);
     }
-    
-    .footer {
-      margin-top: 30px;
-    }
-    .footer p {
-      color: #666;
-    }
-    .footer img {
-      width: 200px; 
-      height: auto;
-    }
- 
-    /* 打卡列表 (Modal) 样式 */
+
+    /* --- 弹窗 (打卡列表) --- */
     #modal-overlay {
       display: none; 
       position: fixed; 
@@ -178,15 +169,123 @@
       border-radius: 10px; 
     }
     
-    #modal-overlay.modal-active {
-      display: block; 
-    }
-    #modal-popup.modal-active {
-      display: flex; 
+    /* --- 弹窗 (免责声明) --- */
+    #disclaimer-overlay {
+      display: none; 
+      position: fixed; 
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.75); 
+      z-index: 200; 
     }
     
+    #disclaimer-popup {
+      display: none; 
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%); 
+      z-index: 201; 
+      width: 90%; 
+      max-width: 500px; 
+    }
 
-    /* 兑换地点区域样式 */
+    .disclaimer-bg {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px; 
+    }
+
+    .disclaimer-content-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 15% 10% 12%; 
+      box-sizing: border-box; 
+      display: flex; 
+      flex-direction: column;
+    }
+
+    #disclaimer-close-btn {
+      position: absolute;
+      top: 5.5%;  
+      right: 11%;
+      width: 10%; 
+      height: 8%; 
+      text-decoration: none;
+      cursor: pointer;
+      z-index: 202; 
+    }
+
+    .disclaimer-body {
+      overflow-y: auto; 
+      height: 100%; 
+      text-align: left; 
+      font-size: 14px;
+      color: #333;
+      line-height: 1.7;
+      padding-right: 5px; 
+      
+      scrollbar-width: thin;
+      scrollbar-color: #8B4513 #fdfaf5;
+    }
+    .disclaimer-body::-webkit-scrollbar {
+      width: 8px;
+    }
+    .disclaimer-body::-webkit-scrollbar-track {
+      background: #fdfaf5;
+      border-radius: 4px;
+    }
+    .disclaimer-body::-webkit-scrollbar-thumb {
+      background-color: #8B4513;
+      border-radius: 4px;
+    }
+
+    .disclaimer-body h3 {
+      text-align: center;
+      color: #000;
+      font-size: 20px;
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+    .disclaimer-body h4 {
+      color: #000;
+      font-weight: bold;
+      font-size: 16px;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 5px;
+    }
+    .disclaimer-body p, .disclaimer-body ol {
+      margin: 10px 0;
+    }
+    .disclaimer-body ol {
+      padding-left: 20px; 
+    }
+    .disclaimer-body li {
+      margin-bottom: 8px;
+    }
+    .disclaimer-body hr {
+      border: 0;
+      border-top: 1px dashed #ccc;
+      margin: 20px 0;
+    }
+
+    /* --- 底部内容 --- */
+    .footer {
+      margin-top: 30px;
+    }
+    .footer p {
+      color: #666;
+    }
+    .footer img {
+      width: 200px; 
+      height: auto;
+    }
+ 
     .exchange-section {
       margin-top: 40px;
       padding-top: 20px;
@@ -224,7 +323,6 @@
       margin: 10px auto 5px; 
     }
 
-    /* 作者信息样式 */
     .author-info {
       margin-top: 40px;
       padding-bottom: 20px;
@@ -243,8 +341,22 @@
       text-decoration: underline;
     }
 
+    /* --- JS 激活类 --- */
+    #disclaimer-overlay.modal-active,
+    #modal-overlay.modal-active {
+      display: block; 
+    }
+    #modal-popup.modal-active {
+      display: flex; 
+    }
+    #disclaimer-popup.modal-active {
+      display: block; 
+    }
+    body.modal-open {
+      overflow: hidden;
+    }
 
-    /* 手机端响应式 */
+    /* --- 响应式 (手机) --- */
     @media (max-width: 600px) {
       .footer img {
         width: 60%; 
@@ -258,151 +370,6 @@
       .exchange-grid {
         grid-template-columns: 1fr; 
       }
-    }
-
-    /* --- 关键修改：免责声明弹窗样式 --- */
-    
-    /* 遮罩层 (与打卡列表共用) */
-    #disclaimer-overlay {
-      display: none; 
-      position: fixed; 
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.75); 
-      z-index: 200; 
-    }
-    
-    /* 弹窗主体 (改为相对定位) */
-    #disclaimer-popup {
-      display: none; 
-      position: fixed;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%); 
-      z-index: 201; 
-      
-      width: 90%; 
-      max-width: 500px; /* PC上最大宽度 */
-      
-      /* 移除 height: 85vh 和 padding */
-      /* 移除 background-image */
-    }
-
-    /* 真实的背景图 (保持宽高比) */
-    .disclaimer-bg {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 10px; /* 给背景图一点圆角 */
-    }
-
-    /* 覆盖在背景图上的内容层 */
-    .disclaimer-content-wrapper {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      
-      /* 关键：设置内边距，把内容挤到背景图的 "框" 内 */
-      /* 这些百分比是根据 popBgBig.png 估算的 */
-      padding: 15% 10% 12%; 
-      box-sizing: border-box; /* 确保 padding 不会撑开 */
-      
-      display: flex; /* 使用 flex 布局来放置滚动体 */
-      flex-direction: column;
-    }
-
-    /* 声明的关闭按钮 (现在相对于 wrapper 定位) */
-    #disclaimer-close-btn {
-      position: absolute;
-      top: 5.5%;  /* 微调位置 */
-      right: 11%;
-      width: 10%; /* 热区 */
-      height: 8%; /* 热区 */
-      font-size: 30px;
-      color: transparent; /* 隐藏 'x' */
-      text-decoration: none;
-      cursor: pointer;
-      z-index: 202; /* 确保在滚动体之上 */
-      
-      /* (用于调试热区，取消注释即可见) */
-      /* background: rgba(255, 0, 0, 0.5); */
-    }
-
-    /* 声明的可滚动正文 */
-    .disclaimer-body {
-      overflow-y: auto; 
-      height: 100%; /* 占满 wrapper 里的所有可用空间 */
-      text-align: left; 
-      font-size: 14px;
-      color: #333;
-      line-height: 1.7;
-      padding-right: 5px; 
-      
-      /* 滚动条样式 */
-      scrollbar-width: thin;
-      scrollbar-color: #8B4513 #fdfaf5;
-    }
-    .disclaimer-body::-webkit-scrollbar {
-      width: 8px;
-    }
-    .disclaimer-body::-webkit-scrollbar-track {
-      background: #fdfaf5;
-      border-radius: 4px;
-    }
-    .disclaimer-body::-webkit-scrollbar-thumb {
-      background-color: #8B4513;
-      border-radius: 4px;
-    }
-
-    /* 声明的排版样式 */
-    .disclaimer-body h3 {
-      text-align: center;
-      color: #000;
-      font-size: 20px;
-      margin-top: 0;
-      margin-bottom: 15px;
-    }
-    .disclaimer-body h4 {
-      color: #000;
-      font-weight: bold;
-      font-size: 16px;
-      margin-top: 20px;
-      margin-bottom: 10px;
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 5px;
-    }
-    .disclaimer-body p, .disclaimer-body ol {
-      margin: 10px 0;
-    }
-    .disclaimer-body ol {
-      padding-left: 20px; 
-    }
-    .disclaimer-body li {
-      margin-bottom: 8px;
-    }
-    .disclaimer-body hr {
-      border: 0;
-      border-top: 1px dashed #ccc;
-      margin: 20px 0;
-    }
-    
-    /* 激活类 (用于JS切换) */
-    #disclaimer-overlay.modal-active,
-    #modal-overlay.modal-active {
-      display: block; 
-    }
-    /* #modal-popup 激活时是 flex */
-    #modal-popup.modal-active {
-      display: flex; 
-    }
-    /* #disclaimer-popup 激活时是 block */
-    #disclaimer-popup.modal-active {
-      display: block; 
-    }
-    
-    body.modal-open {
-      overflow: hidden;
     }
 
   </style>
@@ -497,11 +464,8 @@
   <div id="disclaimer-overlay"></div>
   <div id="disclaimer-popup">
     <img src="declare/popBgBig.png" class="disclaimer-bg" alt="背景">
-    
     <div class="disclaimer-content-wrapper">
-      
       <a href="#" id="disclaimer-close-btn"></a>
-      
       <div class="disclaimer-body">
         <h3>免责声明</h3>
         <p><strong>[胖胖龙打卡小程序入口] 免责声明与使用条款</strong></p>
@@ -552,7 +516,7 @@
 
 
   <script>
-    /* 弹出窗口的 JS (打卡列表) */
+    /* --- 弹窗 JS (打卡列表) --- */
     var modalTrigger = document.getElementById('modal-trigger-btn');
     var modalClose = document.getElementById('modal-close-btn');
     var overlay = document.getElementById('modal-overlay');
@@ -577,7 +541,7 @@
     if (overlay) overlay.onclick = closeModal;
 
     
-    /* 免责声明弹窗 JS (与上方代码完全独立) */
+    /* --- 弹窗 JS (免责声明) --- */
     var disclaimerOverlay = document.getElementById('disclaimer-overlay');
     var disclaimerPopup = document.getElementById('disclaimer-popup');
     var disclaimerClose = document.getElementById('disclaimer-close-btn');
@@ -592,7 +556,7 @@
       if(e) e.preventDefault(); 
       disclaimerOverlay.classList.remove('modal-active');
       disclaimerPopup.classList.remove('modal-active');
-      /* (注意：只有在打卡列表也关闭时，才移除 body 锁) */
+      
       if (!modal.classList.contains('modal-active')) {
           body.classList.remove('modal-open'); 
       }
@@ -602,7 +566,7 @@
     if (disclaimerOverlay) disclaimerOverlay.onclick = closeDisclaimerModal;
 
 
-    /* 您的原始 JS */
+    /* --- 核心功能 JS (跳转) --- */
     function openWeixin(code) { 
       const schemeUrl = `weixin://dl/business/?t=${code}`;
       const intentUrl = `intent://dl/business/?t=${code}#Intent;scheme=weixin;package=com.tencent.mm;S.browser_fallback_url=https...`;
@@ -617,9 +581,9 @@
       document.getElementById('status').textContent = "已尝试打开微信...（如无反应，请确保已安装微信或在手机浏览器中打开）";
     }
 
-    /* window.onload */
+    /* --- 页面加载 JS (地图居中 & 弹窗) --- */
     window.onload = function() { 
-      // 1. (原有的) 居中地图
+      // 1. 居中地图
       try {
         var scroller = document.querySelector('.map-scroller');
         var content = document.querySelector('.map-content');
@@ -634,7 +598,7 @@
         console.error("Error centering map:", e);
       }
       
-      // 2. (新增的) 自动打开免责声明
+      // 2. 自动打开免责声明
       openDisclaimerModal();
     };
   </script>
