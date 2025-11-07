@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>打开微信业务页</title>
+</head>
+<body>
+  <h1>打开微信业务页</h1>
+  <p>点击下面按钮尝试打开微信业务页（移动端有效）：</p>
+  <button id="open">打开微信业务页</button>
+  <p id="status"></p>
+
+  <script>
+    const uri = "weixin://dl/business/?t=DWqI4sdsFWt";
+    const intentUri = "intent://dl/business/?t=DWqI4sdsFWt#Intent;scheme=weixin;package=com.tencent.mm;S.browser_fallback_url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.tencent.mm;end";
+
+    document.getElementById('open').addEventListener('click', function(){
+      // 先尝试用 intent（Android Chrome 支持）
+      window.location = intentUri;
+      // 兼容浏览器可能阻止直接跳转的情况 —— 尝试再次设置 location 为 scheme（某些浏览器需要）
+      setTimeout(function(){
+        window.location = uri;
+      }, 500);
+      document.getElementById('status').textContent = "已尝试启动微信，若无反应请确保设备安装了微信。";
+    });
+  </script>
+</body>
+</html>
