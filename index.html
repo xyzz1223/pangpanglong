@@ -9,28 +9,39 @@
       font-family: "Segoe UI", "PingFang SC", sans-serif;
       background: #fdfaf5; /* 一个接近地图底色的背景色 */
       margin: 0;
-      padding: 20px;
+      padding: 10px 20px 20px;
       text-align: center;
     }
     
-    /* * --- 新增样式 ---
-     * 这是您新标题图片的样式
-     */
+    /* 这是您修改后的标题样式 */
     .page-title {
-      max-width: 300px; /* 限制标题图片的最大宽度 */
-      width: 70%; /* 在手机上自动缩放 */
+      max-width: 300px; 
+      width: 60%;       
       height: auto;
-      margin-bottom: 20px; /* 替代 h1 的 margin-bottom */
+      margin-bottom: 10px; 
     }
 
     .map-container {
       position: relative;
       max-width: 1000px;
-      margin: 20px auto;
+      margin: 10px auto 20px;
       border-radius: 20px;
       overflow: hidden; /* 隐藏溢出的部分，保持圆角 */
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
+    
+    .map-scroller {
+      overflow: auto; /* 允许横向和纵向滚动 */
+      max-height: 70vh; /* 设置窗口的最大高度为屏幕的70% */
+      -webkit-overflow-scrolling: touch; /* 在 iOS 上实现平滑滚动 */
+    }
+
+    .map-content {
+      position: relative; 
+      width: 1000px; /* 地图的固定宽度 (放大倍率) */
+      margin: 0 auto; 
+    }
+
     .map-background {
       width: 100%;
       display: block; /* 消除图片底部的空白间隙 */
@@ -42,8 +53,13 @@
       cursor: pointer;
       transform: translate(-50%, -50%);
       transition: transform 0.2s ease-in-out, filter 0.2s;
+
+      -webkit-tap-highlight-color: transparent;
+      outline: none; 
     }
-    .map-button:hover {
+
+    .map-button:hover,
+    .map-button:active {
       transform: translate(-50%, -50%) scale(1.05);
       filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
     }
@@ -69,6 +85,7 @@
       border-radius: 12px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.2);
       border: 2px solid white;
+      z-index: 10;
     }
     .footer {
       margin-top: 30px;
@@ -77,28 +94,42 @@
       color: #666;
     }
     .footer img {
-      width: 200px;
+      width: 200px; /* 这是电脑端的宽度 */
       height: auto;
     }
+ 
+    @media (max-width: 600px) {
+      .footer img {
+        width: 60%; /* 这是手机端的宽度 */
+      }
+    }
+
   </style>
 </head>
 <body>
+  
   <img src="pplui/根据字体生成字样-removebg-preview.png" class="page-title" alt="胖胖龙打卡小程序入口">
 
   <div class="map-container">
-    <img src="pplui/mapya.cc1bd50a.png" class="map-background" alt="背景地图">
-    <img src="pplui/mapSmall.png" class="mini-map" alt="小地图参考">
 
-    <img src="pplui/jyq.png" class="map-button" id="btn-jyq" alt="夜游锦江" onclick="openWeixin('DWqI4sdsFWt')">
-    <img src="pplui/jsl.png" class="map-button" id="btn-jsl" alt="建设路" onclick="openWeixin('zZUxVzK8yFf')">
-    <img src="pplui/djjy.png" class="map-button" id="btn-djjy" alt="东郊记忆" onclick="openWeixin('cE8ZOd5125j')">
-    <img src="pplui/wsy.png" class="map-button" id="btn-wsy" alt="文殊坊" onclick="openWeixin('S1usC0jHlGc')">
-    <img src="pplui/txssj.png" class="map-button" id="btn-txssj" alt="铁像寺" onclick="openWeixin('4FUYVJWrTof')">
-    <img src="pplui/ifs.png" class="map-button" id="btn-ifs" alt="IFS" onclick="openWeixin('iM0UlJxSURf')">
-    <img src="pplui/jrh.png" class="map-button" id="btn-jrh" alt="晶融汇" onclick="openWeixin('Mxbw2YSGCWl')">
-    <img src="pplui/dccs.png" class="map-button" id="btn-dccs" alt="大慈茶社" onclick="openWeixin('dCTLV6ncbpo')">
-    <img src="pplui/jl.png" class="map-button" id="btn-jl" alt="锦里" onclick="openWeixin('BNxlK4oHgi')">
-    <img src="pplui/kzxz.png" class="map-button" id="btn-kzxz" alt="宽窄巷子" onclick="openWeixin('O1jnBQQXZ8t')">
+    <img src="pplui/mapSmall.png" class="mini-map" alt="小地图参考">
+    
+    <div class="map-scroller">
+      <div class="map-content">
+        <img src="pplui/mapya.cc1bd50a.png" class="map-background" alt="背景地图">
+
+        <img src="pplui/jyq.png" class="map-button" id="btn-jyq" alt="夜游锦江" onclick="openWeixin('DWqI4sdsFWt')">
+        <img src="pplui/jsl.png" class="map-button" id="btn-jsl" alt="建设路" onclick="openWeixin('zZUxVzK8yFf')">
+        <img src="pplui/djjy.png" class="map-button" id="btn-djjy" alt="东郊记忆" onclick="openWeixin('cE8ZOd5125j')">
+        <img src="pplui/wsy.png" class="map-button" id="btn-wsy" alt="文殊坊" onclick="openWeixin('S1usC0jHlGc')">
+        <img src="pplui/txssj.png" class="map-button" id="btn-txssj" alt="铁像寺" onclick="openWeixin('4FUYVJWrTof')">
+        <img src="pplui/ifs.png" class="map-button" id="btn-ifs" alt="IFS" onclick="openWeixin('iM0UlJxSURf')">
+        <img src="pplui/jrh.png" class="map-button" id="btn-jrh" alt="晶融汇" onclick="openWeixin('Mxbw2YSGCWl')">
+        <img src="pplui/dccs.png" class="map-button" id="btn-dccs" alt="大慈茶社" onclick="openWeixin('dCTLV6ncbpo')">
+        <img src="pplui/jl.png" class="map-button" id="btn-jl" alt="锦里" onclick="openWeixin('BNxlK4oHg6i')">
+        <img src="pplui/kzxz.png" class="map-button" id="btn-kzxz" alt="宽窄巷子" onclick="openWeixin('O1jnBQQXZ8t')">
+      </div>
+    </div>
   </div>
 
   <p id="status"></p>
@@ -109,7 +140,7 @@
   </div>
   
   <script>
-    // JS 部分无需改动
+    // 这是您原来的跳转函数
     function openWeixin(code) {
       const schemeUrl = `weixin://dl/business/?t=${code}`;
       const intentUrl = `intent://dl/business/?t=${code}#Intent;scheme=weixin;package=com.tencent.mm;S.browser_fallback_url=https...`;
@@ -123,6 +154,32 @@
       }, 800); 
       document.getElementById('status').textContent = "已尝试打开微信...（如无反应，请确保已安装微信或在手机浏览器中打开）";
     }
+
+    /* * --- 新增：地图居中显示 ---
+     * (这就是我为您添加的代码)
+     */
+    window.onload = function() {
+      try {
+        // 1. 获取滚动窗口和内容
+        var scroller = document.querySelector('.map-scroller');
+        var content = document.querySelector('.map-content');
+
+        if (scroller && content) {
+          // 2. 计算中心滚动位置
+          // (内容总宽度 - 窗口可见宽度) / 2
+          var centerScrollLeft = (content.offsetWidth - scroller.clientWidth) / 2;
+          // (内容总高度 - 窗口可见高度) / 2
+          var centerScrollTop = (content.offsetHeight - scroller.clientHeight) / 2;
+
+          // 3. 设置滚动条位置
+          scroller.scrollLeft = Math.max(0, centerScrollLeft);
+          scroller.scrollTop = Math.max(0, centerScrollTop);
+        }
+      } catch (e) {
+        // 即使出错也不影响页面其他功能
+        console.error("Error centering map:", e);
+      }
+    };
   </script>
 </body>
 </html>
