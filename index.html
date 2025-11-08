@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>胖胖龙打卡小程序入口</title>
   <style>
-    /* --- 基础样式 --- */
     body {
       font-family: "Segoe UI", "PingFang SC", sans-serif;
       background: #fdfaf5; 
@@ -70,7 +69,7 @@
     #btn-djjy { top: 35.4%; left: 77.5%; width: 14%; } 
     #btn-wsy { top: 26.2%; left: 49.7%; width: 12%; } 
     #btn-txssj { top: 75.0%; left: 48.0%; width: 20%; } 
-    #btn-ifs { top: 46.5%; left: 44.7%; width: 10%; } 
+    #btn-ifs { top: 46.5%; left: 44.7%; width: 8%; } 
     #btn-jrh { top: 54.9%; left: 41.7%; width: 14%; } 
     #btn-dccs { top: 37.0%; left: 45.7%; width: 14%; } 
     #btn-kzxz { top: 36.3%; left: 28.1%; width: 15%; } 
@@ -88,7 +87,6 @@
       z-index: 10;
     }
 
-    /* 浮动触发按钮 */
     #modal-trigger-btn {
       position: absolute;
       bottom: 20px; 
@@ -148,12 +146,8 @@
       transform: translateY(-50%); 
       width: 15%; 
       height: 80%;
-      font-size: 35px; 
-      cursor: pointer;
-      font-weight: bold;
       text-decoration: none;
-      color: transparent; 
-      opacity: 0; 
+      cursor: pointer;
     }
 
     .modal-body {
@@ -341,6 +335,22 @@
       text-decoration: underline;
     }
 
+    /* --- 新增：Busuanzi 计数器样式 --- */
+    .busuanzi-counter {
+      color: #888;
+      font-size: 12px;
+      margin-top: 8px;
+      display: inline-block; /* 允许设置最小宽度 */
+      min-width: 120px; /* 预留空间，防止加载时跳动 */
+      text-align: center;
+    }
+    #busuanzi_value_page_pv {
+      color: #e44d80; /* 粉色数字 */
+      font-weight: bold;
+      padding: 0 3px;
+    }
+
+
     /* --- JS 激活类 --- */
     #disclaimer-overlay.modal-active,
     #modal-overlay.modal-active {
@@ -404,11 +414,11 @@
 
   <p id="status"></p>
 
-    <div class="footer">
+  <div class="footer">
     <p>如果觉得有帮助，可以扫码赞赏支持一下 😊</p>
     <img src="image/zanshang.png" alt="赞赏码" />
   </div>
-
+  
   <div class="exchange-section">
     <h2 class="exchange-title">兑换地点</h2>
     <div class="exchange-grid">
@@ -436,12 +446,13 @@
     </div>
   </div>
 
-
-
-
   <div class="author-info">
     <p>by. Blue_Nya, xyzz1223, ZXB</p>
     <p>Email: <a href="mailto:blue_nya@foxmail.com">blue_nya@foxmail.com</a></p>
+    
+    <span class="busuanzi-counter" id="busuanzi_container_page_pv">
+      本站总访问<span id="busuanzi_value_page_pv">...</span>次
+    </span>
   </div>
 
 
@@ -605,5 +616,8 @@
       openDisclaimerModal();
     };
   </script>
+  
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
 </body>
 </html>
